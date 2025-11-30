@@ -1,0 +1,129 @@
+import React, {useState} from 'react';
+import {
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import ARMeasurementView from './src/components/ARView';
+
+const SensorToolkitPlaceholder = () => {
+  return (
+    <ScrollView contentContainerStyle={styles.sensorContainer}>
+      <Text style={styles.title}>iOS Sensor Toolkit (Placeholder)</Text>
+      <Text style={styles.subtitle}>
+        The original web application features will be integrated here.
+      </Text>
+      <View style={styles.featureList}>
+        <Text style={styles.featureItem}>- NFC Reader</Text>
+        <Text style={styles.featureItem}>- Bluetooth Scanner</Text>
+        <Text style={styles.featureItem}>- Motion Sensor</Text>
+        <Text style={styles.featureItem}>- Location Tracker</Text>
+        <Text style={styles.featureItem}>- Sound Meter</Text>
+        <Text style={styles.featureItem}>- Light Meter</Text>
+        <Text style={styles.featureItem}>- Barometer</Text>
+      </View>
+      <Text style={styles.note}>
+        The AR Tape Measure is the main focus and is accessible via the tab below.
+      </Text>
+    </ScrollView>
+  );
+};
+
+const App = () => {
+  const [activeTab, setActiveTab] = useState('AR');
+
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'AR':
+        return <ARMeasurementView />;
+      case 'Sensors':
+        return <SensorToolkitPlaceholder />;
+      default:
+        return <ARMeasurementView />;
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.contentContainer}>{renderContent()}</View>
+      <View style={styles.tabBar}>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'AR' && styles.activeTab]}
+          onPress={() => setActiveTab('AR')}>
+          <Text style={styles.tabText}>AR Tape Measure</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.tab, activeTab === 'Sensors' && styles.activeTab]}
+          onPress={() => setActiveTab('Sensors')}>
+          <Text style={styles.tabText}>Sensor Toolkit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#f0f0f0',
+  },
+  contentContainer: {
+    flex: 1,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    height: 60,
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
+    backgroundColor: 'white',
+  },
+  tab: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  activeTab: {
+    backgroundColor: '#e0e0e0',
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  sensorContainer: {
+    padding: 20,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: '#333',
+  },
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#666',
+  },
+  featureList: {
+    alignSelf: 'flex-start',
+    marginBottom: 20,
+  },
+  featureItem: {
+    fontSize: 18,
+    color: '#333',
+    marginVertical: 5,
+  },
+  note: {
+    fontSize: 14,
+    fontStyle: 'italic',
+    color: 'red',
+    marginTop: 20,
+  },
+});
+
+export default App;
